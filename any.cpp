@@ -2,7 +2,8 @@
 #include <sstream>
 #include <set>
 
-namespace gcg {
+namespace any_type
+{
 
     Any::Any() : type_(NONE)
     {
@@ -421,4 +422,4 @@ namespace gcg {
         return tmp;
     }
 
-} // gcg
+} // any_type

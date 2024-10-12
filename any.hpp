@@ -1,5 +1,4 @@
-#ifndef GCG_ANY_HPP
-#define GCG_ANY_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -7,7 +6,7 @@
 #include <vector>
 #include <fstream>
 
-namespace gcg {
+namespace any_type {
 
     enum ANY_TYPE {
         STRING  = 1,
@@ -71,6 +70,4 @@ namespace gcg {
     int typeToInt(ANY_TYPE type);
     std::string readString(std::ifstream & in);
 
-} // gcg
-
-#endif //GCG_ANY_HPP
+} // any_type
