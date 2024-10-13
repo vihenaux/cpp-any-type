@@ -45,9 +45,24 @@ namespace any_type
 
     }
 
+    Any::Any(const ANY_OBJECT_STATUS & status) : status_(status)
+    {
+
+    }
+
     ANY_TYPE Any::getType() const
     {
         return type_;
+    }
+
+    ANY_OBJECT_STATUS Any::getStatus() const
+    {
+        return status_;
+    }
+
+    void Any::setStatus(const ANY_OBJECT_STATUS & status)
+    {
+        status_ = status;
     }
 
     std::string Any::to_string() const
@@ -177,6 +192,12 @@ namespace any_type
     Any readJson(const std::string & path)
     {
         std::ifstream jsonFile(path);
+
+        if(!jsonFile.is_open())
+        {
+            return Any(ANY_OBJECT_STATUS::IMPORT_FAIL);
+        }
+
         std::string content = "";
 
         for(std::string line; std::getline(jsonFile, line);)

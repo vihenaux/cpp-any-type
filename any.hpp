@@ -8,6 +8,12 @@
 
 namespace any_type {
 
+    enum ANY_OBJECT_STATUS {
+        OK,
+        KO,
+        IMPORT_FAIL
+    };
+
     enum ANY_TYPE {
         STRING  = 1,
         INT     = 2,
@@ -29,8 +35,11 @@ namespace any_type {
         Any(bool value);
         Any(const std::map<std::string,Any> & value);
         Any(const std::vector<Any> & value);
+        Any(const ANY_OBJECT_STATUS & status);
 
         ANY_TYPE getType() const;
+        ANY_OBJECT_STATUS getStatus() const;
+        void setStatus(const ANY_OBJECT_STATUS & status);
 
         std::string to_string() const;
         std::string getStr() const;
@@ -54,6 +63,7 @@ namespace any_type {
         Any(ANY_TYPE type);
 
         ANY_TYPE type_{NONE};
+        ANY_OBJECT_STATUS status_{OK};
 
         std::string str_{""};
         int int_{0};
