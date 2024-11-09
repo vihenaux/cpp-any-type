@@ -1,7 +1,6 @@
 #include "any.hpp"
 #include <sstream>
 #include <set>
-#include <ranges>
 
 namespace any_type
 {
@@ -125,8 +124,10 @@ namespace any_type
 
     std::vector<std::string> Any::getKeys() const
     {
-        auto key_view = std::views::keys(dict_);
-        std::vector<std::string> keys{ key_view.begin(), key_view.end() };
+        std::vector<std::string> keys;
+        for(auto const& item: dict)
+            vints.push_back(item.first);
+
         return keys;
     }
 
