@@ -1,6 +1,7 @@
 #include "any.hpp"
 #include <sstream>
 #include <set>
+#include <ranges>
 
 namespace any_type
 {
@@ -120,6 +121,13 @@ namespace any_type
     bool Any::contains(const std::string & key) const
     {
         return type_ == DICT && dict_.contains(key);
+    }
+
+    std::vector<std::string> Any::getKeys() const
+    {
+        auto key_view = std::views::keys(dict_);
+        std::vector<std::string> keys{ key_view.begin(), key_view.end() };
+        return keys;
     }
 
     unsigned int Any::size() const

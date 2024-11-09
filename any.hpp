@@ -50,6 +50,7 @@ namespace any_type {
         Any operator[](unsigned int index) const;
         unsigned int size() const;
         bool contains(const std::string & key) const;
+        std::vector<std::string> getKeys() const;
 
         void add(const std::string & key, const Any & value);
         void add(const Any & value);
