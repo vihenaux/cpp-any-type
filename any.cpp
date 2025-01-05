@@ -452,4 +452,88 @@ namespace any_type
         return tmp;
     }
 
+    void saveJson(Any const & json, std::string const & path, bool readable = true, unsigned int tab = 0)
+    {
+        std::ofstream output(path);
+
+        if(!output.is_open())
+        {
+            std::cerr << "ANY_TYPE save json error. Could not open file at : " << path << std::endl;
+            return;
+        }
+
+        saveJson(json, output, readable, tab);
+    }
+
+    void saveDict(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
+    {
+        output << std::string(tab*readable, '\t') << "{";
+        ++tab;
+
+        std::vector<std::string> dict_keys = json.getKeys()
+        for(unsigned int i(0); i < dict_keys.size(); ++i)
+        {
+            output << std::string(tab*readable, '\t') << "\"" << dict_keys[i] << "\": ";
+            saveJson(json[dict_keys[i]], output, readable, tab);
+            if(i+1 < dict_keys.size())
+                output << ",";
+            if(readable)
+                output << std::endl;
+        }
+
+        --tab;
+        output << std::string(tab*readable, '\t') << "}";
+        if (readable)
+            output << std::endl;
+    }
+
+    void saveArray(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
+    {
+        output << std::string(tab*readable, '\t') << "[";
+        ++tab;
+
+        for(unsigned int i(0); i < json.size(); ++i)
+        {
+            output << std::string(tab*readable, '\t');
+            saveJson(json[i], output, readable, tab);
+            if(i+1 < dict_keys.size())
+                output << ",";
+            if(readable)
+                output << std::endl;
+        }
+
+        --tab;
+        output << std::string(tab*readable, '\t') << "]";
+        if (readable)
+            output << std::endl;
+    }
+
+    void saveJson(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
+    {
+        switch(json.getType())
+        {
+            case DICT:
+                saveDict(json,output,readable,tab);
+                return;
+            case ARRAY:
+                saveArray(json,output,readable,tab);
+                return;
+            case BOOL:
+                output << ((json.getBool()) ? "true" : "false");
+                return;
+            case FLOAT:
+                output << json.getFlt();
+                return;
+            case STRING:
+                output << "\"" << json.getStr() << "\"";
+                return;
+            case INT:
+                output << json.getInt();
+                return;
+            case NONE:
+                output << "null";
+                return;
+        }
+    }
+
 } // any_type

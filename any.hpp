@@ -80,5 +80,7 @@ namespace any_type {
     ANY_TYPE intToType(int type);
     int typeToInt(ANY_TYPE type);
     std::string readString(std::ifstream & in);
+    void saveJson(Any const & json, std::string const & path, bool readable = true, unsigned int tab = 0);
+    void saveJson(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0);
 
 } // any_type
