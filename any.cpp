@@ -508,7 +508,7 @@ namespace any_type
             output << std::endl;
     }
 
-    void saveJson(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
+    void saveJson(Any const & json, std::ofstream & output, bool readable, unsigned int tab)
     {
         switch(json.getType())
         {
