@@ -119,7 +119,7 @@ namespace any_type
 
     bool Any::contains(const std::string & key) const
     {
-        return type_ == DICT && dict_.contains(key);
+        return type_ == DICT && dict_.count(key);
     }
 
     std::vector<std::string> Any::getKeys() const
@@ -452,7 +452,7 @@ namespace any_type
         return tmp;
     }
 
-    void saveJson(Any const & json, std::string const & path, bool readable = true, unsigned int tab = 0)
+    void saveJson(Any const & json, std::string const & path, bool readable, unsigned int tab)
     {
         std::ofstream output(path);
 
@@ -465,12 +465,12 @@ namespace any_type
         saveJson(json, output, readable, tab);
     }
 
-    void saveDict(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
+    static void saveDict(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
     {
         output << std::string(tab*readable, '\t') << "{";
         ++tab;
 
-        std::vector<std::string> dict_keys = json.getKeys()
+        std::vector<std::string> dict_keys = json.getKeys();
         for(unsigned int i(0); i < dict_keys.size(); ++i)
         {
             output << std::string(tab*readable, '\t') << "\"" << dict_keys[i] << "\": ";
@@ -487,7 +487,7 @@ namespace any_type
             output << std::endl;
     }
 
-    void saveArray(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
+    static void saveArray(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
     {
         output << std::string(tab*readable, '\t') << "[";
         ++tab;
@@ -496,7 +496,7 @@ namespace any_type
         {
             output << std::string(tab*readable, '\t');
             saveJson(json[i], output, readable, tab);
-            if(i+1 < dict_keys.size())
+            if(i+1 < json.size())
                 output << ",";
             if(readable)
                 output << std::endl;
