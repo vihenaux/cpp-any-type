@@ -467,7 +467,7 @@ namespace any_type
 
     static void saveDict(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
     {
-        output << std::string(tab*readable, '\t') << "{";
+        output << "{" << std::endl;
         ++tab;
 
         std::vector<std::string> dict_keys = json.getKeys();
@@ -489,7 +489,7 @@ namespace any_type
 
     static void saveArray(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
     {
-        output << std::string(tab*readable, '\t') << "[";
+        output << "[" << std::endl;
         ++tab;
 
         for(unsigned int i(0); i < json.size(); ++i)
