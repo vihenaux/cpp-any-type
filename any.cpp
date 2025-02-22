@@ -483,8 +483,6 @@ namespace any_type
 
         --tab;
         output << std::string(tab*readable, '\t') << "}";
-        if (readable)
-            output << std::endl;
     }
 
     static void saveArray(Any const & json, std::ofstream & output, bool readable = true, unsigned int tab = 0)
@@ -504,8 +502,6 @@ namespace any_type
 
         --tab;
         output << std::string(tab*readable, '\t') << "]";
-        if (readable)
-            output << std::endl;
     }
 
     void saveJson(Any const & json, std::ofstream & output, bool readable, unsigned int tab)
