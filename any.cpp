@@ -1,6 +1,7 @@
 #include "any.hpp"
 #include <sstream>
 #include <set>
+#include <iomanip>
 
 namespace any_type
 {
@@ -75,7 +76,7 @@ namespace any_type
                 return std::to_string(int_);
             case FLOAT: {
                 std::stringstream ss;
-                ss << dbl_;
+                ss << std::defaultfloat << dbl_;
                 return ss.str();
             }
             case BOOL:
@@ -83,7 +84,7 @@ namespace any_type
             case DICT:
             case ARRAY:
             case NONE:
-                return "";
+                return "null";
         }
     }
 
@@ -514,20 +515,14 @@ namespace any_type
             case ARRAY:
                 saveArray(json,output,readable,tab);
                 return;
-            case BOOL:
-                output << ((json.getBool()) ? "true" : "false");
-                return;
-            case FLOAT:
-                output << json.getFlt();
-                return;
             case STRING:
                 output << "\"" << json.getStr() << "\"";
                 return;
+            case BOOL:
+            case FLOAT:
             case INT:
-                output << json.getInt();
-                return;
             case NONE:
-                output << "null";
+                output << json.to_string();
                 return;
         }
     }
