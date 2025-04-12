@@ -2,6 +2,7 @@
 #include <sstream>
 #include <set>
 #include <iomanip>
+#include <limits>
 
 namespace any_type
 {
@@ -76,7 +77,7 @@ namespace any_type
                 return std::to_string(int_);
             case FLOAT: {
                 std::stringstream ss;
-                ss << std::defaultfloat << dbl_;
+                ss << std::setprecision(std::numeric_limits<double>::digits10) << dbl_;
                 return ss.str();
             }
             case BOOL:
@@ -316,6 +317,7 @@ namespace any_type
             {
                 if(json[cursor] != '.' && !(json[cursor] >= '0' && json[cursor] <= '9'))
                 {
+                    cursor--;
                     if(this_content.find('.') != std::string::npos)
                     {
                         return Any(std::stod(this_content));
