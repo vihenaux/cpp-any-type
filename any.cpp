@@ -27,7 +27,12 @@ namespace any_type
 
     }
 
-    Any::Any(double value) : type_(FLOAT), dbl_(value)
+    Any::Any(double value) : type_(FLOAT), dbl_(value), valid_str_dbl_(false)
+    {
+
+    }
+
+    Any::Any(double value, const std::string & str_representation) : type_(FLOAT), dbl_(value), str_(str_representation)
     {
 
     }
@@ -102,6 +107,23 @@ namespace any_type
     double Any::getFlt() const
     {
         return (type_ == FLOAT) ? dbl_ : 0.;
+    }
+
+    std::string Any::getFltStr() const
+    {
+        if(type_ != FLOAT)
+        {
+            return "";
+        }
+
+        if(valid_str_dbl_)
+        {
+            return str_;
+        }
+
+        std::stringstream ss;
+        ss << std::setprecision(std::numeric_limits<double>::digits10) << dbl_;
+        return ss.str();
     }
 
     bool Any::getBool() const
@@ -320,7 +342,7 @@ namespace any_type
                     cursor--;
                     if(this_content.find('.') != std::string::npos)
                     {
-                        return Any(std::stod(this_content));
+                        return Any(std::stod(this_content), this_content);
                     }
                     else
                     {

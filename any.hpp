@@ -25,13 +25,14 @@ namespace any_type {
     };
 
     class Any {
-        public:
+    public:
 
         Any();
         Any(const Any & a) = default;
         Any(const std::string & value);
         Any(int value);
         Any(double value);
+        Any(double value, const std::string & str_representation);
         Any(bool value);
         Any(const std::map<std::string,Any> & value);
         Any(const std::vector<Any> & value);
@@ -45,6 +46,7 @@ namespace any_type {
         std::string getStr() const;
         int getInt() const;
         double getFlt() const;
+        std::string getFltStr() const;
         bool getBool() const;
         Any operator[](const std::string & key) const;
         Any operator[](unsigned int index) const;
@@ -59,7 +61,7 @@ namespace any_type {
 
         friend Any readJson(const std::string & json, unsigned int & cursor);
 
-        private:
+    private:
 
         Any(ANY_TYPE type);
 
@@ -69,6 +71,7 @@ namespace any_type {
         std::string str_{""};
         int int_{0};
         double dbl_{0.};
+        bool valid_str_dbl_{true};
         bool bool_{true};
         std::map<std::string,Any> dict_{};
         std::vector<Any> array_{};
