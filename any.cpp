@@ -32,7 +32,7 @@ namespace any_type
 
     }
 
-    Any::Any(double value, const std::string & str_representation) : type_(FLOAT), dbl_(value), str_(str_representation)
+    Any::Any(double value, const std::string & str_representation) : type_(FLOAT), str_(str_representation), dbl_(value)
     {
 
     }
